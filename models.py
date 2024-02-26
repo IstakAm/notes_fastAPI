@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Hashable
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped , mapped_column, relationship
 from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import validates
 
 class Base(DeclarativeBase):
     pass
@@ -13,7 +14,10 @@ class User(Base):
     first_name : Mapped[str] = mapped_column(String(50), nullable=False)
     last_name : Mapped[str] = mapped_column(String(50), nullable=False)
     username : Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
-    notes : Mapped[List["Note"]] = relationship("Note",back_populates="user", cascade="all, delete")
+    notes : Mapped[List["Note"]] = relationship("Note",back_populates="user", cascade="all, delete, delete-orphan")
+    password : Mapped[str] = mapped_column(nullable=False)
+
+    
 
 
 class Note(Base):

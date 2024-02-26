@@ -1,28 +1,25 @@
 from models import *
 from connect import engine
 from sqlalchemy.orm import Session
-
+from password import *
 
 session = Session(bind=engine)
 
 
-def create_user(username, first_name, last_name):
+def create_user(username, first_name, last_name, password):
     try:
         user = User(
             first_name = first_name,
             last_name = last_name,
-            username = username
+            username = username,
+            password = password,
         )
         session.add(user)
         session.commit()
-        return {
-            "first_name" : first_name,
-            "last_name" : last_name,
-            "username" : username
-        }
+        return True
     except Exception as e:
         print(e)
-        return ""
+        return False
 
 
 def get_user_by_id(user_id):
@@ -40,3 +37,10 @@ def add_note(text, user):
         print(e)
         return False
 
+def verify_user(username, password):
+    user = session.query(User).filter(User.username == username).first()
+    hashed_pass = user.password
+    verify = verify_password(password, hashed_pass)
+    if user :
+        return user
+    return None
