@@ -1,6 +1,5 @@
-from jose import JWTError, jwt
+from jose import jwt
 from datetime import datetime, timedelta, timezone
-from typing import Union
 from utils.password import SECRET_KEY
 
 
