@@ -5,14 +5,11 @@ from fastapi import Query
 
 
 
-class user(BaseModel):
+class User(BaseModel):
     username : str
-    first_name : str
-    last_name : str
     password : str
 
 
-class note(BaseModel):
-    text : str
-    user_id : int
-
+class RegisterUser(User):
+    first_name: str
+    last_name : str

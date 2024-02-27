@@ -1,7 +1,7 @@
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from typing import Union
-from password import SECRET_KEY
+from utils.password import SECRET_KEY
 
 
 def generate_token(user_id):
@@ -15,3 +15,7 @@ def generate_token(user_id):
     return access_token
 
 
+def decode_token(token):
+    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    return payload
+    

@@ -1,7 +1,7 @@
-from models import *
-from connect import engine
+from .models import *
+from .connect import engine
 from sqlalchemy.orm import Session
-from password import *
+from utils.password import *
 
 session = Session(bind=engine)
 
@@ -41,6 +41,21 @@ def verify_user(username, password):
     user = session.query(User).filter(User.username == username).first()
     hashed_pass = user.password
     verify = verify_password(password, hashed_pass)
-    if user :
+    if user and verify:
         return user
     return None
+
+
+def get_note_by_id(note_id):
+    note = session.query(Note).get(note_id)
+    return note
+
+
+def delete_note(note_id):
+    try:
+        note = session.query(Note).filter(Note.id==note_id).delete()
+        session.commit()
+        return True
+    except Exception as e:
+        print(e)
+        return False
