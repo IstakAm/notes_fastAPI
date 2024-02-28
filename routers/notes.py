@@ -20,7 +20,7 @@ async def add_note_api(note : str, access_token: Annotated[Union[str, None], Coo
 
 
 @router.get("/notes")
-async def add_note_api(access_token: Annotated[Union[str, None], Cookie()] = None):
+async def user_notes_api(access_token: Annotated[Union[str, None], Cookie()] = None):
     user_id = decode_token(access_token).get("user_id")
     return {"data": notes_serializer(get_user_notes(user_id))}
 

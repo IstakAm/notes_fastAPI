@@ -1,3 +1,5 @@
 /env
 /__pycache__
 .gitignore
+.gunicorn_start.swp
+.gunicorn_start.swo
