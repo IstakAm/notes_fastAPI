@@ -51,6 +51,12 @@ def get_note_by_id(note_id):
     return note
 
 
+def get_user_notes(user_id):
+    user = session.query(User).get(user_id)
+    notes = user.notes
+    return notes
+
+
 def delete_note(note_id):
     try:
         note = session.query(Note).filter(Note.id==note_id).delete()

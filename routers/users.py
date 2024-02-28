@@ -26,11 +26,13 @@ async def login_user_api(user : User):
     data = user.model_dump()
     username = data.get("username")
     password = data.get("password")
-    user = verify_user(username, hash_password(password))
-    if user:
+    user = verify_user(username, password)
+    try:
         token = generate_token(user.id)
         return {"message": "signed in", "access_token": token}
-    return {"error": "login failed"}
+    except Exception as e:
+        print(e)
+        return {"error": "login failed"}
 
 
 @router.post("/user")

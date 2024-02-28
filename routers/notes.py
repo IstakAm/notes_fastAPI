@@ -1,7 +1,8 @@
 from typing import Annotated, Union
 from fastapi import APIRouter, Cookie
 
-from database.persisting import add_note, delete_note, get_note_by_id, get_user_by_id
+from database.persisting import add_note, delete_note, get_note_by_id, get_user_by_id, get_user_notes
+from utils.serializers import notes_serializer
 from utils.tokens import decode_token
 
 
@@ -17,6 +18,11 @@ async def add_note_api(note : str, access_token: Annotated[Union[str, None], Coo
         return {"message": "made successfully"}
     return {"message": "error occurred"}
 
+
+@router.get("/notes")
+async def add_note_api(access_token: Annotated[Union[str, None], Cookie()] = None):
+    user_id = decode_token(access_token).get("user_id")
+    return {"data": notes_serializer(get_user_notes(user_id))}
 
 
 @router.delete("/delete_note")
