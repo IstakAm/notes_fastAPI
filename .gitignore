@@ -3,3 +3,5 @@
 .gitignore
 .gunicorn_start.swp
 .gunicorn_start.swo
+.env
+/alembic_files/versions
